@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NeuroTrade — Authentication</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="/css/pages/log-sign.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap"
+        rel="stylesheet" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+</head>
+
+<body>
+    <div class="grid-bg"></div>
+
+    <div id="cursor"></div>
+    <div id="cursor-ring"></div>
+
+    <div class="auth-wrapper" id="authWrapper">
+
+        <div class="brand-panel">
+            <div>
+                <img src="/Images/logo.png" alt="Neuro Trade" class="nav-logo-img" />
+                <div
+                    style="margin-top: 100px; font-size: 2.2rem; font-weight: 800; line-height: 1.1; letter-spacing: -0.02em;">
+                    Stop Guessing.<br><span style="color: var(--up);">Start Surviving.</span>
+                </div>
+                <p style="margin-top: 16px; color: var(--muted); font-size: .95rem; max-width: 85%;">
+                    Join 2,400+ elite traders. Train in real-time, get intercepted by AI, and prove your discipline to
+                    unlock real broker integrations.
+                </p>
+            </div>
+
+            <div style="border-top: 1px solid var(--border); padding-top: 20px;">
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
+                    <div
+                        style="width: 10px; height: 10px; background: var(--up); border-radius: 50%; box-shadow: 0 0 10px var(--up);">
+                    </div>
+                    <div style="font-family: 'DM Mono', monospace; font-size: .8rem; color: var(--muted);">SYSTEM ONLINE
+                    </div>
+                </div>
+                <div style="font-family: 'DM Mono', monospace; font-size: .75rem; color: var(--border);">
+                    > Connecting to NSE/BSE API... [OK]<br>
+                    > AI Risk Engine Initiated... [OK]
+                </div>
+            </div>
+        </div>
+
+        <div class="form-panel">
+
+            <div class="form-container" id="loginForm">
+                <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 8px;">Welcome Back.</h2>
+                <p style="color: var(--muted); font-size: .9rem; margin-bottom: 30px;">Access your trading terminal and
+                    analytics.</p>
+
+                <div class="input-group">
+                    <input type="text" class="inp" placeholder=" " id="loginId" />
+                    <label class="floating-label">Email or Username</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" class="inp" placeholder=" " id="loginPass" />
+                    <label class="floating-label">Password</label>
+                </div>
+                <div style="text-align: right; margin-top: -10px; margin-bottom: 20px;">
+                    <a href="#"
+                        style="color: var(--muted); font-size: .75rem; text-decoration: none; transition: color .2s;"
+                        onmouseover="this.style.color='var(--up)'" onmouseout="this.style.color='var(--muted)'">Forgot
+                        Password?</a>
+                </div>
+
+                <button class="btn-submit" id="loginBtn" onclick="login()">
+                    ACCESS TERMINAL
+                </button>
+                <div style="display: flex; align-items: center; margin: 24px 0; color: var(--border);">
+                    <div style="flex: 1; height: 1px; background: var(--border);"></div>
+                    <span
+                        style="padding: 0 10px; font-size: .75rem; color: var(--muted); font-family: 'DM Mono', monospace;">OR
+                        CONTINUE WITH</span>
+                    <div style="flex: 1; height: 1px; background: var(--border);"></div>
+                </div>
+
+                <button class="btn-social">
+                    <svg class="social-icon" viewBox="0 0 24 24">
+                        <path
+                            d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                            fill="#4285F4" />
+                        <path
+                            d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                            fill="#34A853" />
+                        <path
+                            d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                            fill="#FBBC05" />
+                        <path
+                            d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                            fill="#EA4335" />
+                    </svg>
+                    Google
+                </button>
+
+                <p class="switch-text">New to NeuroTrade? <span class="switch-link"
+                        onclick="toggleAuth('signup')">Initialize Setup</span></p>
+            </div>
+
+            <div class="form-container" id="signupForm" style="display: none; opacity: 0;">
+                <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 8px;">Initialize Setup.</h2>
+                <p style="color: var(--muted); font-size: .85rem; margin-bottom: 20px;">Deploy your AI risk manager and
+                    start trading.</p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <div class="input-group" style="margin-bottom: 12px;">
+                        <input type="text" class="inp" placeholder=" " />
+                        <label class="floating-label">Full Name</label>
+                    </div>
+                    <div class="input-group" style="margin-bottom: 12px;">
+                        <input type="text" class="inp" placeholder=" " />
+                        <label class="floating-label">Username</label>
+                    </div>
+                </div>
+
+                <div class="input-group" style="margin-bottom: 12px;">
+                    <input type="email" class="inp" placeholder=" " />
+                    <label class="floating-label">Email Address</label>
+                </div>
+                <div class="input-group" style="margin-bottom: 12px;">
+                    <input type="tel" class="inp" placeholder=" " />
+                    <label class="floating-label">Phone Number</label>
+                </div>
+                <div class="input-group" style="margin-bottom: 12px;">
+                    <input type="password" class="inp" placeholder=" " />
+                    <label class="floating-label">Create Password</label>
+                </div>
+
+                <div style="font-size: .75rem; color: var(--muted); font-family: 'DM Mono', monospace;">Trading
+                    Experience:</div>
+                <div class="exp-group">
+                    <div class="exp-pill active" onclick="setExp(this)">Beginner</div>
+                    <div class="exp-pill" onclick="setExp(this)">Intermediate</div>
+                    <div class="exp-pill" onclick="setExp(this)">Pro</div>
+                </div>
+
+                <button class="btn-submit" onclick="window.location.href='index.html'">ACCESS TERMINAL</button>
+
+                <p class="switch-text" style="margin-top: 16px;">Already deployed? <span class="switch-link"
+                        onclick="toggleAuth('login')">Access Terminal</span></p>
+            </div>
+
+        </div>
+    </div>
+    <script src="/js/log-sign.js"></script>
+</body>
+
+</html>

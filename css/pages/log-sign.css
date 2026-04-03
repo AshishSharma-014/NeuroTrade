@@ -1,0 +1,314 @@
+/* ── Design Tokens ── */
+:root {
+    --bg: #0a0e17;
+    --s1: #111827;
+    --s2: #1e2d45;
+    --border: #2b3139;
+    --text: #eaecef;
+    --muted: #848e9c;
+    --up: #0ecb81;
+    --down: #f6465d;
+    --up-glow: rgba(14, 203, 129, .35);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: none;
+}
+
+/* Background Noise & Grid */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: .45;
+}
+
+.grid-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: linear-gradient(rgba(14, 203, 129, .03) 1px, transparent 1px), linear-gradient(90deg, rgba(14, 203, 129, .03) 1px, transparent 1px);
+    background-size: 44px 44px;
+}
+
+/* Custom Cursor */
+#cursor {
+    width: 12px;
+    height: 12px;
+    background: var(--up);
+    border-radius: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: width .2s, height .2s;
+    box-shadow: 0 0 16px var(--up-glow);
+}
+
+#cursor-ring {
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(14, 203, 129, .4);
+    border-radius: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9998;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+}
+
+body:has(a:hover) #cursor,
+body:has(button:hover) #cursor,
+body:has(input:focus) #cursor {
+    width: 20px;
+    height: 20px;
+}
+
+/* Auth Container */
+.auth-wrapper {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 1000px;
+    height: 650px;
+    display: flex;
+    border-radius: 24px;
+    background: rgba(17, 24, 39, 0.6);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(40px);
+    /* For GSAP */
+}
+
+/* Left Panel (Branding) */
+.brand-panel {
+    flex: 1;
+    padding: 50px;
+    background: linear-gradient(135deg, rgba(14, 203, 129, 0.05) 0%, transparent 100%);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+}
+
+.brand-panel::after {
+    content: '';
+    position: absolute;
+    bottom: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(14, 203, 129, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.nav-logo-img {
+    height: 230px;
+    width: auto;
+    object-fit: contain;
+    position: absolute;
+    top: -13px;
+}
+
+/* Right Panel (Forms) */
+.form-panel {
+    flex: 1;
+    padding: 50px;
+    position: relative;
+    background: var(--bg);
+}
+
+.form-container {
+    position: absolute;
+    inset: 0;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Inputs */
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.inp {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 14px 8px;
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: .9rem;
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+}
+
+.inp:focus {
+    border-color: var(--up);
+    box-shadow: 0 0 0 3px rgba(14, 203, 129, .1);
+}
+
+.floating-label {
+    position: absolute;
+    left: 14px;
+    top: 12px;
+    color: var(--muted);
+    font-size: .85rem;
+    pointer-events: none;
+    transition: all .2s ease;
+    font-family: 'Syne', sans-serif;
+}
+
+.inp:focus~.floating-label,
+.inp:not(:placeholder-shown)~.floating-label {
+    top: 4px;
+    font-size: .65rem;
+    color: var(--up);
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    background: var(--up);
+    color: #0a0e17;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 1rem;
+    cursor: none;
+    margin-top: 10px;
+    transition: box-shadow .2s, transform .1s;
+}
+
+.btn-submit:hover {
+    box-shadow: 0 0 30px var(--up-glow);
+    transform: translateY(-2px);
+}
+
+.btn-social {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: none;
+    transition: background .2s, border-color .2s;
+    margin-bottom: 12px;
+}
+
+.btn-social:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--muted);
+}
+
+.social-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* Experience Pills */
+.exp-group {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    margin-bottom: 20px;
+}
+
+.exp-pill {
+    flex: 1;
+    text-align: center;
+    padding: 8px 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: .75rem;
+    color: var(--muted);
+    cursor: none;
+    transition: all .2s;
+    font-family: 'DM Mono', monospace;
+}
+
+.exp-pill.active {
+    border-color: var(--up);
+    color: var(--up);
+    background: rgba(14, 203, 129, .1);
+}
+
+/* Switch text */
+.switch-text {
+    text-align: center;
+    margin-top: 24px;
+    font-size: .85rem;
+    color: var(--muted);
+}
+
+.switch-link {
+    color: var(--up);
+    cursor: none;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .auth-wrapper {
+        flex-direction: column;
+        height: auto;
+        border-radius: 0;
+        border: none;
+    }
+
+    .brand-panel {
+        display: none;
+    }
+
+    /* Hide branding on small mobile to save space */
+    .form-panel {
+        padding: 30px 20px;
+    }
+
+    .form-container {
+        position: relative;
+        padding: 0;
+    }
+}

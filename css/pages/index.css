@@ -30,7 +30,7 @@ body {
     color: var(--text);
     font-family: 'Syne', sans-serif;
     overflow-x: hidden;
-    cursor: none;
+    cursor: default;
     /* custom cursor */
 }
 
@@ -114,7 +114,7 @@ body::before {
 }
 
 /* ── NAV ── */
-nav {
+.navbar {
     position: fixed;
     top: 0;
     left: 0;
@@ -129,7 +129,7 @@ nav {
     transition: background .3s, border-color .3s, backdrop-filter .3s;
 }
 
-nav.scrolled {
+.navbar.scrolled {
     background: rgba(17, 18, 22, .85);
     border-color: var(--border);
     backdrop-filter: blur(18px);
@@ -148,8 +148,8 @@ nav.scrolled {
 
 /* Purani .logo-mark hata kar ye add karein */
 .nav-logo-img {
-    margin-top: 25px;
-    height: 230px;
+    margin-top: 15px;
+    height: 220px;
     /* Navbar ke hisaab se height set ki hai */
     width: auto;
     /* Width auto rakhne se logo stretch/pichkega nahi */
@@ -759,7 +759,7 @@ footer {
         gap: 48px;
     }
 
-    nav {
+    .navbar {
         padding: 0 20px;
     }
 
