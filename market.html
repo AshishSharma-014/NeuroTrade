@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StockQuest — Market Overview</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="css/pages/index.css">
+    <link rel="stylesheet" href="css/pages/market.css">
+
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body>
+    <div id="navbar"></div>
+    <div class="body">
+        <div class="ticker-wrap z1" id="tickerTape">
+            <div class="ticker-inner" id="tickerContent">
+                <span>Fetching Live Market Data...</span>
+            </div>
+        </div>
+
+        <header class="z1"
+            style="border-bottom:1px solid var(--border);background:rgba(17,18,22,.92);backdrop-filter:blur(14px);position:sticky;top:0;z-index:50;">
+            <div
+                style="max-width:1440px;margin:0 auto;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;gap:16px;">
+
+                <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
+                    <span
+                        style="font-size:.62rem;color:var(--muted);font-family:'DM Mono',monospace;background:var(--border);padding:2px 8px;border-radius:99px;">MARKET
+                        TODAY</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+                    <div id="marketStatusBadge" class="market-open">
+                        <span class="ldot" style="width:5px;height:5px;"></span>
+                        <span id="marketStatusText">Fetching...</span>
+                    </div>
+                    <div style="font-size:.72rem;font-family:'DM Mono',monospace;color:var(--muted);" id="liveTime">
+                        --:--:--
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main style="max-width:1440px;margin:0 auto;padding:24px 20px;" class="z1">
+
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;"
+                class="s1">
+                <div>
+                    <h1 style="font-size:1.4rem;font-weight:800;letter-spacing:-.01em;">Market Overview</h1>
+                    <p style="font-size:.78rem;color:var(--muted);margin-top:3px;" id="todayDate">Loading date…</p>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <div style="font-size:.72rem;font-family:'DM Mono',monospace;color:var(--muted);">Status: <span
+                            id="apiStatusText" style="color:var(--accent);">Connecting to Yahoo Finance...</span></div>
+                    <div style="display:flex;align-items:center;gap:5px;"><span class="ldot"></span><span
+                            style="font-size:.7rem;color:var(--muted);font-family:'DM Mono',monospace;">LIVE</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="s2" style="margin-bottom:32px;">
+                <div class="section-header">
+                    <div class="section-bar"></div>
+                    <h2 style="font-size:.9rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;">Market
+                        Indices</h2>
+                </div>
+
+                <div id="indicesGrid"
+                    style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;">
+                    <div class="card" style="padding:18px; height: 160px;">
+                        <div class="skeleton" style="width:100%; height:100%;"></div>
+                    </div>
+                    <div class="card" style="padding:18px; height: 160px;">
+                        <div class="skeleton" style="width:100%; height:100%;"></div>
+                    </div>
+                    <div class="card" style="padding:18px; height: 160px;">
+                        <div class="skeleton" style="width:100%; height:100%;"></div>
+                    </div>
+                    <div class="card" style="padding:18px; height: 160px;">
+                        <div class="skeleton" style="width:100%; height:100%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="s3" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px;">
+
+                <div>
+                    <div class="section-header">
+                        <div class="section-bar" style="background:var(--up);"></div>
+                        <h2 style="font-size:.9rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;">Top
+                            Gainers</h2>
+                        <span
+                            style="font-size:.68rem;color:var(--up);font-family:'DM Mono',monospace;margin-left:auto;">Today</span>
+                    </div>
+                    <div
+                        style="display:grid;grid-template-columns:1fr auto auto;gap:8px;padding:0 12px 8px;font-size:.64rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);">
+                        <span>Company</span><span style="text-align:right;">Price</span><span
+                            style="text-align:right;min-width:60px;">Change</span>
+                    </div>
+                    <div id="gainersGrid" style="display:flex;flex-direction:column;gap:4px;margin-top:6px;">
+                        <div class="skeleton" style="width:100%; height: 60px; margin-bottom: 4px;"></div>
+                        <div class="skeleton" style="width:100%; height: 60px; margin-bottom: 4px;"></div>
+                        <div class="skeleton" style="width:100%; height: 60px; margin-bottom: 4px;"></div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="section-header">
+                        <div class="section-bar" style="background:var(--down);"></div>
+                        <h2 style="font-size:.9rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;">Top
+                            Losers</h2>
+                        <span
+                            style="font-size:.68rem;color:var(--down);font-family:'DM Mono',monospace;margin-left:auto;">Today</span>
+                    </div>
+                    <div
+                        style="display:grid;grid-template-columns:1fr auto auto;gap:8px;padding:0 12px 8px;font-size:.64rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--border);">
+                        <span>Company</span><span style="text-align:right;">Price</span><span
+                            style="text-align:right;min-width:60px;">Change</span>
+                    </div>
+                    <div id="losersGrid" style="display:flex;flex-direction:column;gap:4px;margin-top:6px;">
+                        <div class="skeleton" style="width:100%; height: 60px; margin-bottom: 4px;"></div>
+                        <div class="skeleton" style="width:100%; height: 60px; margin-bottom: 4px;"></div>
+                        <div class="skeleton" style="width:100%; height: 60px; margin-bottom: 4px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="s4" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px;">
+
+                <div>
+                    <div class="section-header">
+                        <div class="section-bar" style="background:var(--accent2);"></div>
+                        <h2 style="font-size:.9rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;">Most
+                            Active</h2>
+                        <span
+                            style="font-size:.68rem;color:var(--muted);font-family:'DM Mono',monospace;margin-left:auto;">By
+                            Volume</span>
+                    </div>
+                    <div class="card" style="padding:0;overflow:hidden;">
+                        <table style="width:100%;border-collapse:collapse;font-size:.82rem;">
+                            <thead>
+                                <tr style="border-bottom:1px solid var(--border);">
+                                    <th
+                                        style="text-align:left;padding:10px 16px;font-size:.64rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;">
+                                        Symbol</th>
+                                    <th
+                                        style="text-align:right;padding:10px 16px;font-size:.64rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;">
+                                        Price</th>
+                                    <th
+                                        style="text-align:right;padding:10px 16px;font-size:.64rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;">
+                                        Chg%</th>
+                                    <th
+                                        style="text-align:right;padding:10px 16px;font-size:.64rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;">
+                                        Volume</th>
+                                </tr>
+                            </thead>
+                            <tbody id="activeTable">
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="skeleton" style="height:40px; margin: 4px;"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="skeleton" style="height:40px; margin: 4px;"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="skeleton" style="height:40px; margin: 4px;"></div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="section-header">
+                        <div class="section-bar" style="background:#9b59b6;"></div>
+                        <h2 style="font-size:.9rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;">
+                            Market
+                            Pulse</h2>
+                        <span
+                            style="font-size:.68rem;color:var(--muted);font-family:'DM Mono',monospace;margin-left:auto;">Latest</span>
+                    </div>
+                    <div class="card"
+                        style="padding:16px; display:grid; grid-template-columns:repeat(2, 1fr); gap:16px;"
+                        id="newsContainer">
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <footer class="z1"
+            style="border-top:1px solid var(--border);padding:14px 20px;text-align:center;font-size:.68rem;color:var(--muted);font-family:'DM Mono',monospace;">
+            StockQuest Market Overview · Real Market Data powered by Yahoo Finance
+        </footer>
+    </div>
+
+    <script src="js/market.js"></script>
+    <script src="js/navbar.js"></script>
+</body>
+
+</html>

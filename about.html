@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About | NeuroTrade</title>
+
+  <link rel="stylesheet" href="/css/pages/about.css">
+  <link rel="stylesheet" href="/css/pages/index.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <div id="navbar"></div>
+
+  <!-- BACKGROUND -->
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <!-- ABOUT -->
+  <section class="about">
+    <h1 class="title">NeuroTrade</h1>
+    <p class="tagline">Stop Guessing. Start Trading Smart.</p>
+
+    <p class="desc">
+      NeuroTrade helps beginner traders trade safely, avoid losses,
+      and build discipline using AI-powered insights and simulations.
+    </p>
+
+    <div class="cards">
+      <div class="card">
+        <div class="icon">🤖</div>
+        <h3>AI Mentor</h3>
+        <p>Real-time intelligent guidance for smarter trades.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">📉</div>
+        <h3>Risk Management</h3>
+        <p>Protect your capital with disciplined strategies.</p>
+      </div>
+
+      <div class="card">
+        <div class="icon">📊</div>
+        <h3>Smart Learning</h3>
+        <p>Practice with simulations and grow your confidence.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact">
+    <h2>Contact Us</h2>
+
+    <form id="contactForm" class="form">
+      <div class="input-box">
+        <input type="text" id="name" required>
+        <label>Name</label>
+      </div>
+
+      <div class="input-box">
+        <input type="email" id="email" required>
+        <label>Email</label>
+      </div>
+
+      <div class="input-box">
+        <input type="tel" id="phone" required>
+        <label>Phone</label>
+      </div>
+
+      <div class="input-box">
+        <textarea id="message" required></textarea>
+        <label>Message</label>
+      </div>
+
+      <button type="submit" class="btn">Send Message</button>
+    </form>
+
+    <div id="successMsg" class="success hidden">
+      Message Sent Successfully 🚀
+    </div>
+  </section>
+
+  <script src="/js/navbar.js"></script>
+  <script src="/js/about.js"></script>
+
+</body>
+</html>

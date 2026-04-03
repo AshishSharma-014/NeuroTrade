@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <a href="market.html" class="nav-link">Market</a>
         <a href="game.html" class="nav-link">AI Simulator</a>
         <a href="CA.html" class="nav-link">Virtual CA</a>
-        <a href="contact.html" class="nav-link">Contact Us</a>
+        <a href="about.html" class="nav-link">About Us</a>
       </div>
 
       <div id="nav-right" style="display:flex;align-items:center;gap:12px;">

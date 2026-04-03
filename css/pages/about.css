@@ -1,0 +1,425 @@
+/* Exact CSS from home.html for consistency */
+/* ── Design Tokens ── */
+:root {
+    --bg: #111216;
+    --s1: #181a20;
+    --s2: #1e2026;
+    --border: #2b3139;
+    --text: #eaecef;
+    --muted: #848e9c;
+    --up: #0ecb81;
+    --down: #f6465d;
+    --gold: #f0b90b;
+    --up-glow: rgba(14, 203, 129, .35);
+    --down-glow: rgba(246, 70, 93, .35);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+    /* custom cursor */
+}
+
+/* ── Custom cursor ── */
+#cursor {
+    width: 12px;
+    height: 12px;
+    background: var(--up);
+    border-radius: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: width .2s, height .2s, background .2s;
+    mix-blend-mode: normal;
+    box-shadow: 0 0 16px var(--up-glow);
+}
+
+#cursor-ring {
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(14, 203, 129, .4);
+    border-radius: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9998;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+}
+
+body:has(a:hover) #cursor,
+body:has(button:hover) #cursor {
+    width: 20px;
+    height: 20px;
+}
+
+/* ── Noise texture overlay ── */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: .45;
+}
+
+/* ── Grid background ── */
+.grid-bg {
+    background-image:
+        linear-gradient(rgba(14, 203, 129, .04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(14, 203, 129, .04) 1px, transparent 1px);
+    background-size: 44px 44px;
+}
+
+.z1 {
+    position: relative;
+    z-index: 1;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+    width: 3px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 2px;
+}
+
+/* ── Typography ── */
+.num {
+    font-family: 'DM Mono', monospace;
+}
+
+/* ── NAV ── */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 0 40px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid transparent;
+    transition: background .3s, border-color .3s, backdrop-filter .3s;
+}
+
+nav.scrolled {
+    background: rgba(17, 18, 22, .85);
+    border-color: var(--border);
+    backdrop-filter: blur(18px);
+}
+
+.nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 1.05rem;
+    letter-spacing: -.01em;
+    text-decoration: none;
+    color: var(--text);
+}
+
+/* Purani .logo-mark hata kar ye add karein */
+.nav-logo-img {
+    margin-top: 25px;
+    height: 230px;
+    /* Navbar ke hisaab se height set ki hai */
+    width: auto;
+    /* Width auto rakhne se logo stretch/pichkega nahi */
+    object-fit: contain;
+}
+
+.nav-link {
+    font-size: .82rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color .15s;
+    letter-spacing: .02em;
+}
+
+.nav-link:hover {
+    color: var(--text);
+}
+
+/* ── CTA Button — neon green with magnetic effect ── */
+.btn-cta {
+    position: relative;
+    background: var(--up);
+    color: #111216;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    border: none;
+    border-radius: 12px;
+    padding: 15px 36px;
+    font-size: 1rem;
+    cursor: none;
+    letter-spacing: .02em;
+    overflow: hidden;
+    transition: box-shadow .2s;
+    display: inline-block;
+}
+
+.btn-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, .2), transparent);
+    border-radius: inherit;
+}
+
+.btn-cta:hover {
+    box-shadow: 0 0 40px var(--up-glow), 0 0 80px rgba(14, 203, 129, .15);
+}
+
+.btn-cta .btn-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .3);
+    transform: scale(0);
+    animation: ripple .6s linear;
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    border-radius: 10px;
+    padding: 9px 20px;
+    font-size: .82rem;
+    cursor: none;
+    transition: border-color .15s, color .15s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-secondary:hover {
+    border-color: var(--up);
+    color: var(--up);
+}
+
+/* ── Glowing gradient text ── */
+.text-gradient {
+    background: linear-gradient(135deg, var(--up) 0%, #00ff88 50%, #00d4aa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.text-red {
+    background: linear-gradient(135deg, var(--down) 0%, #ff6b6b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* About page specific styles */
+.about {
+    padding: 120px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.title {
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--text) 0%, var(--up) 50%, var(--text) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 24px;
+    letter-spacing: -0.03em;
+}
+
+.tagline {
+    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    color: var(--muted);
+    margin-bottom: 48px;
+    font-weight: 500;
+}
+
+.desc {
+    font-size: 1.1rem;
+    color: var(--text);
+    max-width: 600px;
+    margin: 0 auto 64px;
+    line-height: 1.7;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 32px;
+}
+
+.card {
+    background: var(--s1);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 48px 32px;
+    /* transition: all 0.3s ease; */
+}
+
+.card:hover {
+    border-color: var(--up);
+    box-shadow: 0 20px 40px rgba(14, 203, 129, 0.15);
+    transform: translateY(-8px);
+}
+
+.icon {
+    font-size: 3rem;
+    margin-bottom: 24px;
+}
+
+.card h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.card p {
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+/* Contact section */
+.contact {
+    padding: 120px 40px;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.form {
+    display: grid;
+    gap: 24px;
+    margin-top: 48px;
+}
+
+.input-box {
+    position: relative;
+}
+
+.input-box input,
+.input-box textarea {
+    width: 100%;
+    padding: 16px;
+    background: var(--s2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.input-box label {
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    color: var(--muted);
+    font-size: 0.9rem;
+    pointer-events: none;
+    transition: all 0.3s;
+}
+
+.input-box input:focus+label,
+.input-box input:valid+label,
+.input-box textarea:focus+label,
+.input-box textarea:valid+label {
+    top: -8px;
+    left: 12px;
+    font-size: 0.75rem;
+    background: var(--s1);
+    padding: 0 8px;
+    color: var(--up);
+}
+
+.btn {
+    background: linear-gradient(135deg, var(--up), #00d4aa);
+    color: #111216;
+    border: none;
+    padding: 18px 48px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    letter-spacing: 0.02em;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px rgba(14, 203, 129, 0.4);
+}
+
+.success {
+    margin-top: 24px;
+    padding: 16px 32px;
+    background: rgba(14, 203, 129, 0.15);
+    border: 1px solid var(--up);
+    border-radius: 12px;
+    color: var(--up);
+    font-weight: 600;
+}
+
+.hidden {
+    display: none;
+}
+
+@media (max-width: 768px) {
+
+    .about,
+    .contact {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    nav {
+        padding: 0 20px;
+        flex-wrap: wrap;
+    }
+}

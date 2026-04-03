@@ -1,0 +1,477 @@
+/* ── Design Tokens (Dhan.co inspired) ── */
+:root {
+    --bg: #111216;
+    --surface: #181a20;
+    --surface2: #1e2026;
+    --border: #2b3139;
+    --text: #eaecef;
+    --muted: #848e9c;
+    --up: #0ecb81;
+    --down: #f6465d;
+    --accent: #f0b90b;
+    /* gold — Binance/Dhan style accent */
+    --accent2: #2563eb;
+    --up-bg: rgba(14, 203, 129, .08);
+    --down-bg: rgba(246, 70, 93, .08);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Subtle dot grid */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, .04) 1px, transparent 1px);
+    background-size: 28px 28px;
+}
+
+.z1 {
+    position: relative;
+    z-index: 1;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--surface);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 2px;
+}
+
+.num {
+    font-family: 'DM Mono', monospace;
+}
+
+/* ── Cards ── */
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .2s, transform .15s;
+}
+
+.card:hover {
+    border-color: #3d4756;
+}
+
+/* Top shimmer line */
+.card-shimmer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(240, 185, 11, .2), transparent);
+}
+
+/* ── Index cards — glow border on up/down ── */
+.idx-card-up {
+    border-color: rgba(14, 203, 129, .25);
+}
+
+.idx-card-down {
+    border-color: rgba(246, 70, 93, .25);
+}
+
+/* ── Ticker tape ── */
+.ticker-wrap {
+    overflow: hidden;
+    white-space: nowrap;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 5px 0;
+}
+
+.ticker-inner {
+    display: inline-block;
+    animation: tk 30s linear infinite;
+    font-family: 'DM Mono', monospace;
+    font-size: .72rem;
+    color: var(--muted);
+}
+
+.ticker-inner span {
+    margin: 0 32px;
+}
+
+.tc-up {
+    color: var(--up);
+}
+
+.tc-down {
+    color: var(--down);
+}
+
+@keyframes tk {
+    from {
+        transform: translateX(0)
+    }
+
+    to {
+        transform: translateX(-50%)
+    }
+}
+
+/* ── Live dot ── */
+.ldot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--up);
+    box-shadow: 0 0 6px var(--up);
+    display: inline-block;
+    animation: lp 1.3s ease-in-out infinite;
+}
+
+@keyframes lp {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1)
+    }
+
+    50% {
+        opacity: .3;
+        transform: scale(.6)
+    }
+}
+
+/* ── Flash animations ── */
+.flash-up {
+    animation: fu .5s ease;
+}
+
+.flash-down {
+    animation: fd .5s ease;
+}
+
+@keyframes fu {
+
+    0%,
+    100% {
+        background: var(--surface)
+    }
+
+    50% {
+        background: rgba(14, 203, 129, .12)
+    }
+}
+
+@keyframes fd {
+
+    0%,
+    100% {
+        background: var(--surface)
+    }
+
+    50% {
+        background: rgba(246, 70, 93, .12)
+    }
+}
+
+/* ── Section headers ── */
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.section-bar {
+    width: 3px;
+    height: 18px;
+    border-radius: 99px;
+    background: var(--accent);
+}
+
+/* ── Gainer / Loser cards ── */
+.stock-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    transition: all .18s;
+    cursor: default;
+}
+
+.stock-card:hover {
+    border-color: #3d4756;
+    transform: translateY(-1px);
+}
+
+.stock-card.gainer {
+    border-left: 2px solid var(--up);
+}
+
+.stock-card.loser {
+    border-left: 2px solid var(--down);
+}
+
+/* ── Badge pills ── */
+.badge-up {
+    background: var(--up-bg);
+    color: var(--up);
+    font-family: 'DM Mono', monospace;
+    font-size: .72rem;
+    padding: 2px 8px;
+    border-radius: 99px;
+    font-weight: 600;
+}
+
+.badge-down {
+    background: var(--down-bg);
+    color: var(--down);
+    font-family: 'DM Mono', monospace;
+    font-size: .72rem;
+    padding: 2px 8px;
+    border-radius: 99px;
+    font-weight: 600;
+}
+
+/* ── News card ── */
+.news-item {
+    border-bottom: 1px solid var(--border);
+    padding: 12px 0;
+    transition: background .12s;
+}
+
+.news-item:last-child {
+    border-bottom: none;
+}
+
+.news-item:hover {
+    background: var(--surface2);
+    margin: 0 -16px;
+    padding: 12px 16px;
+    border-radius: 6px;
+}
+
+/* ── Market status badge ── */
+.market-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: .7rem;
+    font-family: 'DM Mono', monospace;
+    padding: 4px 12px;
+    border-radius: 99px;
+    border: 1px solid;
+}
+
+.market-open {
+    background: rgba(14, 203, 129, .08);
+    border-color: rgba(14, 203, 129, .3);
+    color: var(--up);
+}
+
+.market-closed {
+    background: rgba(246, 70, 93, .08);
+    border-color: rgba(246, 70, 93, .3);
+    color: var(--down);
+}
+
+.market-pre {
+    background: rgba(240, 185, 11, .08);
+    border-color: rgba(240, 185, 11, .3);
+    color: var(--accent);
+}
+
+/* ── Buttons ── */
+.btn-primary {
+    background: var(--accent);
+    color: #111216;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 8px 18px;
+    font-size: .82rem;
+    transition: all .15s;
+    letter-spacing: .02em;
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(240, 185, 11, .25);
+}
+
+.btn-ghost {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 7px 14px;
+    font-size: .78rem;
+    transition: all .15s;
+}
+
+.btn-ghost:hover {
+    border-color: var(--up);
+    color: var(--up);
+}
+
+/* ── Heatmap sector strip ── */
+.sector-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: .78rem;
+    cursor: default;
+    transition: opacity .15s;
+}
+
+.sector-pill:hover {
+    opacity: .85;
+}
+
+/* ── Stagger animations ── */
+.s1 {
+    animation: su .4s ease .05s both
+}
+
+.s2 {
+    animation: su .4s ease .12s both
+}
+
+.s3 {
+    animation: su .4s ease .20s both
+}
+
+.s4 {
+    animation: su .4s ease .28s both
+}
+
+.s5 {
+    animation: su .4s ease .36s both
+}
+
+@keyframes su {
+    from {
+        opacity: 0;
+        transform: translateY(14px)
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0)
+    }
+}
+
+/* ── Sparkline canvas ── */
+.sparkline-wrap {
+    width: 100%;
+    height: 44px;
+    position: relative;
+}
+
+/* ── Volume bar ── */
+.vol-bar {
+    height: 4px;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--up), rgba(14, 203, 129, .3));
+    transition: width .4s ease;
+}
+
+.vol-bar.down {
+    background: linear-gradient(90deg, var(--down), rgba(246, 70, 93, .3));
+}
+
+/* ── Loading Skeletons ── */
+.skeleton {
+    background: linear-gradient(90deg, var(--border) 25%, var(--surface2) 50%, var(--border) 75%);
+    background-size: 200% 100%;
+    animation: sk 1.5s infinite;
+    border-radius: 8px;
+}
+
+@keyframes sk {
+    0% {
+        background-position: 200% 0
+    }
+
+    100% {
+        background-position: -200% 0
+    }
+}
+
+/* ── News Hover Effect ── */
+.news-link {
+    border-radius: 8px;
+    margin: 0 -8px;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+}
+
+.news-link:hover {
+    background: var(--surface2) !important;
+    padding-left: 10px !important;
+}
+
+/* ── News 2-Column Grid Fixes ── */
+#newsContainer .news-link {
+    border-bottom: none !important;
+    /* JS ka purana border hatayega */
+    background: var(--bg);
+    /* News ka background dark karega */
+    border: 1px solid var(--border);
+    padding: 14px !important;
+    border-radius: 10px !important;
+    margin: 0 !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#newsContainer .news-link:hover {
+    background: var(--surface2) !important;
+    border-color: #3d4756;
+    transform: translateY(-2px);
+}
+
+.nav-logo-img {
+    height: 200px;
+    /* Header ke andar fit aane ke liye */
+    margin-top: 22px;
+    /* Halki si adjustment */
+    object-fit: contain;
+}
+.body{
+    margin-top: 4.15%;
+}
+.stock-card {
+    cursor: pointer;
+}

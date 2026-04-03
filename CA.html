@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NeuroTrade — Virtual CA</title>
+
+  <link rel="stylesheet" href="css/pages/CA.css">
+  <link rel="stylesheet" href="/css/pages/index.css">
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <div id="navbar"></div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>💼 Your Virtual CA</h1>
+    <p>Manage taxes, savings, and financial planning — all in one place</p>
+  </section>
+
+  <!-- TAX CALCULATOR -->
+  <section class="card">
+    <h2>💰 Tax Calculator</h2>
+
+    <input type="number" id="income" placeholder="Enter your yearly income">
+
+    <button onclick="calculateTax()">Calculate Tax</button>
+
+    <p id="taxResult"></p>
+  </section>
+
+  <!-- SAVINGS PLANNER -->
+  <section class="card">
+    <h2>📊 Savings Planner</h2>
+
+    <input type="number" id="salary" placeholder="Monthly Salary">
+    <input type="number" id="expenses" placeholder="Monthly Expenses">
+
+    <button onclick="calculateSavings()">Analyze</button>
+
+    <p id="savingsResult"></p>
+  </section>
+
+  <!-- GOAL PLANNER -->
+  <section class="card">
+    <h2>🎯 Goal Planner</h2>
+
+    <input type="number" id="goalAmount" placeholder="Target Amount (₹)">
+    <input type="number" id="years" placeholder="Years">
+
+    <button onclick="calculateGoal()">Calculate</button>
+
+    <p id="goalResult"></p>
+  </section>
+
+  <!-- TIPS -->
+  <section class="tips">
+    <h2>📘 Smart Financial Tips</h2>
+
+    <div class="tip-card">Always invest at least 20% of your income</div>
+    <div class="tip-card">Avoid emotional trading decisions</div>
+    <div class="tip-card">Diversify your investments</div>
+    <div class="tip-card">Use SIP for long-term wealth building</div>
+  </section>
+
+  <!-- FOOTER -->
+  <div id="footer"></div>
+
+  <script src="/js/navbar.js"></script>
+  <script src="js/pages/virtualca.js"></script>
+
+</body>
+</html>

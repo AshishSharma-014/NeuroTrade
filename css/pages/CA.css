@@ -1,0 +1,82 @@
+body {
+  padding-top: 80px;
+  background: #111216;
+  color: #fff;
+  font-family: 'Syne', sans-serif;
+}
+
+/* HERO */
+.hero {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.hero h1 {
+  font-size: 2rem;
+  color: #0ecb81;
+}
+
+.hero p {
+  color: #aaa;
+  margin-top: 10px;
+}
+
+/* CARD */
+.card {
+  max-width: 500px;
+  margin: 30px auto;
+  padding: 25px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid #2b3139;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+/* INPUT */
+.card input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  background: #1e2026;
+  border: 1px solid #2b3139;
+  color: white;
+  border-radius: 8px;
+}
+
+/* BUTTON */
+.card button {
+  width: 100%;
+  padding: 10px;
+  background: #0ecb81;
+  border: none;
+  color: black;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.card button:hover {
+  opacity: 0.9;
+}
+
+/* RESULT */
+.card p {
+  margin-top: 10px;
+  color: #0ecb81;
+}
+
+/* TIPS */
+.tips {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.tip-card {
+  background: #1e2026;
+  border: 1px solid #2b3139;
+  padding: 15px;
+  margin: 10px auto;
+  max-width: 400px;
+  border-radius: 10px;
+}
