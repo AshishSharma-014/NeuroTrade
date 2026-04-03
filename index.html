@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StockQuest — Stop Guessing. Start Managing Risk.</title>
+    <link rel="stylesheet" href="css/pages/index.css">
+    <link rel="preload" href="/Images/logo.png" as="image">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap"
+        rel="stylesheet" />
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- GSAP + ScrollTrigger -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/TextPlugin.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['Syne', 'sans-serif'],
+                        mono: ['DM Mono', 'monospace'],
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+
+<body class="grid-bg">
+
+    <!-- Custom cursor -->
+    <div id="cursor"></div>
+    <div id="cursor-ring"></div>
+
+    <!-- ══════════════════════════════════════════════
+     NAVIGATION
+══════════════════════════════════════════════ -->
+    <nav id="navbar">
+        <a href="index.html" class="nav-logo">
+            <img src="/Images/logo.png" alt="Neuro Trade" class="nav-logo-img" fetchpriority="high" decoding="sync" />
+        </a>
+
+        <div style="display:flex;align-items:center;gap:32px;">
+            <a href="today.html" class="nav-link">Market</a>
+            <a href="index.html" class="nav-link">Terminal</a>
+            <a href="#discipline" class="nav-link">Discipline</a>
+            <a href="#fc-1" class="nav-link">AI Mentor</a>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:12px;">
+            <a href="auth.html" class="btn-secondary">Log In</a>
+            <a href="index.html" class="btn-cta" style="padding:9px 22px;font-size:.82rem;" id="nav-cta">Enter Arena</a>
+        </div>
+    </nav>
+
+    <!-- ══════════════════════════════════════════════
+     HERO SECTION
+══════════════════════════════════════════════ -->
+    <section id="hero">
+        <!-- Glow orbs -->
+        <div class="orb"
+            style="width:500px;height:500px;background:rgba(14,203,129,.06);top:-100px;left:50%;transform:translateX(-50%);">
+        </div>
+        <div class="orb" style="width:300px;height:300px;background:rgba(246,70,93,.05);top:40%;right:-100px;"></div>
+
+        <div class="z1" style="width:100%;max-width:900px;margin:0 auto;">
+
+            <!-- Badge -->
+            <div class="hero-badge" id="hero-badge">
+                <span
+                    style="width:6px;height:6px;border-radius:50%;background:var(--up);box-shadow:0 0 8px var(--up);"></span>
+                Now in Beta — 2,400+ traders enrolled
+            </div>
+
+            <!-- Headline -->
+            <h1 class="hero-headline" id="hero-h1">
+                <span class="text-red">Stop Guessing.</span><br>
+                <span class="text-gradient">Start Managing Risk.</span>
+            </h1>
+
+            <!-- Subheadline -->
+            <p class="hero-sub" id="hero-sub">
+                Experience a high-speed money survival camp. Learn to trade through active AI interception,
+                not boring passive courses.
+            </p>
+
+            <!-- CTAs -->
+            <div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;opacity:0;"
+                id="hero-ctas">
+                <button class="btn-cta" id="main-cta" onclick="window.location.href='index.html'">
+                    Enter the Arena →
+                </button>
+                <a href="today.html" class="btn-secondary">View Live Market</a>
+            </div>
+
+            <!-- Trust line -->
+            <p style="margin-top:24px;font-size:.72rem;color:var(--muted);font-family:'DM Mono',monospace;opacity:0;"
+                id="hero-trust">
+                No real money needed · 15-min delayed real market data · Free forever
+            </p>
+        </div>
+
+        <!-- Floating chart mockup -->
+        <div class="hero-visual" id="hero-visual">
+
+            <!-- Floating stat pills -->
+            <div class="stat-pill num" style="top:-30px;left:-40px;transform:rotate(-4deg);" id="pill-1">
+                <div style="font-size:.62rem;color:var(--muted);margin-bottom:2px;">PORTFOLIO VALUE</div>
+                <div style="font-size:1rem;font-weight:500;color:var(--up);">₹1,24,850</div>
+                <div style="font-size:.62rem;color:var(--up);">▲ +18.4% today</div>
+            </div>
+
+            <div class="stat-pill num" style="top:-10px;right:-50px;transform:rotate(3deg);" id="pill-2">
+                <div style="font-size:.62rem;color:var(--muted);margin-bottom:2px;">DISCIPLINE SCORE</div>
+                <div style="font-size:1rem;font-weight:500;color:var(--gold);">92 / 100</div>
+                <div style="font-size:.62rem;color:var(--muted);">Elite Trader</div>
+            </div>
+
+            <div class="stat-pill num" style="bottom:-20px;left:10%;transform:rotate(-2deg);" id="pill-3">
+                <div style="font-size:.62rem;color:var(--muted);margin-bottom:2px;">AI INTERCEPTED</div>
+                <div style="font-size:1rem;font-weight:500;color:var(--down);">3 revenge trades</div>
+                <div style="font-size:.62rem;color:var(--muted);">saved ₹8,200</div>
+            </div>
+
+            <!-- Main mockup card -->
+            <div class="mockup-card">
+                <div class="mockup-header">
+                    <div class="dot" style="background:#f43f5e;"></div>
+                    <div class="dot" style="background:#f59e0b;"></div>
+                    <div class="dot" style="background:#0ecb81;"></div>
+                    <span style="margin-left:8px;font-size:.72rem;color:var(--muted);font-family:'DM Mono',monospace;">
+                        RELIANCE.NS — StockQuest Simulator
+                    </span>
+                    <span style="margin-left:auto;font-size:.7rem;color:var(--up);font-family:'DM Mono',monospace;">LIVE
+                        ●</span>
+                </div>
+
+                <div class="chart-area">
+                    <!-- Price header -->
+                    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:16px;">
+                        <div>
+                            <div
+                                style="font-family:'DM Mono',monospace;font-size:1.8rem;font-weight:500;color:var(--up);">
+                                ₹2,891.45</div>
+                            <div style="font-size:.72rem;color:var(--up);margin-top:2px;">▲ ₹22.30 (+0.78%)</div>
+                        </div>
+                        <div style="display:flex;gap:6px;">
+                            <button
+                                style="background:rgba(14,203,129,.1);border:1px solid rgba(14,203,129,.2);color:var(--up);border-radius:6px;padding:4px 10px;font-size:.68rem;font-family:'DM Mono',monospace;cursor:none;">1D</button>
+                            <button
+                                style="background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:4px 10px;font-size:.68rem;font-family:'DM Mono',monospace;cursor:none;">1W</button>
+                            <button
+                                style="background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:6px;padding:4px 10px;font-size:.68rem;font-family:'DM Mono',monospace;cursor:none;">1M</button>
+                        </div>
+                    </div>
+
+                    <!-- SVG Chart -->
+                    <svg width="100%" height="140" viewBox="0 0 640 140" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#0ecb81" stop-opacity=".35" />
+                                <stop offset="100%" stop-color="#0ecb81" stop-opacity="0" />
+                            </linearGradient>
+                        </defs>
+                        <!-- Fill area -->
+                        <path
+                            d="M0,110 C40,105 60,90 100,85 C140,80 160,95 200,88 C240,82 260,60 300,50 C340,40 360,55 400,45 C440,35 480,20 520,18 C560,16 600,22 640,20 L640,140 L0,140 Z"
+                            fill="url(#chartGrad)" />
+                        <!-- Line -->
+                        <path class="chart-line" id="chart-line"
+                            d="M0,110 C40,105 60,90 100,85 C140,80 160,95 200,88 C240,82 260,60 300,50 C340,40 360,55 400,45 C440,35 480,20 520,18 C560,16 600,22 640,20"
+                            stroke="#0ecb81" stroke-width="2.5" fill="none" stroke-linecap="round" />
+                        <!-- Last point dot -->
+                        <circle cx="640" cy="20" r="5" fill="#0ecb81">
+                            <animate attributeName="r" values="5;8;5" dur="1.5s" repeatCount="indefinite" />
+                            <animate attributeName="opacity" values="1;.4;1" dur="1.5s" repeatCount="indefinite" />
+                        </circle>
+                    </svg>
+
+                    <!-- Bottom mini stats -->
+                    <div
+                        style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:14px;padding-top:14px;border-top:1px solid var(--border);">
+                        <div style="text-align:center;">
+                            <div style="font-size:.6rem;color:var(--muted);margin-bottom:2px;">OPEN</div>
+                            <div style="font-family:'DM Mono',monospace;font-size:.78rem;">₹2,869</div>
+                        </div>
+                        <div style="text-align:center;">
+                            <div style="font-size:.6rem;color:var(--up);margin-bottom:2px;">HIGH</div>
+                            <div style="font-family:'DM Mono',monospace;font-size:.78rem;color:var(--up);">₹2,901</div>
+                        </div>
+                        <div style="text-align:center;">
+                            <div style="font-size:.6rem;color:var(--down);margin-bottom:2px;">LOW</div>
+                            <div style="font-family:'DM Mono',monospace;font-size:.78rem;color:var(--down);">₹2,855
+                            </div>
+                        </div>
+                        <div style="text-align:center;">
+                            <div style="font-size:.6rem;color:var(--muted);margin-bottom:2px;">VOLUME</div>
+                            <div style="font-family:'DM Mono',monospace;font-size:.78rem;">5.43 Cr</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════
+     SOCIAL PROOF LOGOS
+══════════════════════════════════════════════ -->
+    <section id="proof">
+        <p class="proof-label">Data powered by</p>
+        <div class="logos-row" id="logos-row">
+            <div class="logo-pill">Yahoo Finance</div>
+            <div class="logo-pill">NSE · BSE</div>
+            <div class="logo-pill">Live API</div>
+            <div class="logo-pill">NIFTY 50</div>
+            <div class="logo-pill">SENSEX</div>
+            <div class="logo-pill">F&O Data</div>
+        </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════
+     STATS
+══════════════════════════════════════════════ -->
+    <section id="stats">
+        <div style="text-align:center;margin-bottom:60px;">
+            <div class="section-label" style="justify-content:center;">By the Numbers</div>
+            <h2 style="font-size:clamp(1.8rem,4vw,3rem);font-weight:800;letter-spacing:-.02em;">
+                Real data. Real discipline.<br>Real results.
+            </h2>
+        </div>
+        <div class="stats-grid" id="stats-grid">
+            <div class="stat-block">
+                <div class="stat-value text-gradient" id="stat-1">0</div>
+                <div class="stat-label">Traders Enrolled</div>
+            </div>
+            <div class="stat-block">
+                <div class="stat-value text-gradient" id="stat-2">0%</div>
+                <div class="stat-label">Faster Learning vs Courses</div>
+            </div>
+            <div class="stat-block">
+                <div class="stat-value text-gradient" id="stat-3">0</div>
+                <div class="stat-label">AI Trade Interceptions</div>
+            </div>
+            <div class="stat-block">
+                <div class="stat-value text-gradient" id="stat-4">0</div>
+                <div class="stat-label">Stocks Tracked Live</div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════
+     TRIAL BY FIRE — Sticky scroll section
+══════════════════════════════════════════════ -->
+    <section id="trial">
+        <div class="trial-inner">
+
+            <!-- Sticky left panel -->
+            <div class="trial-sticky" id="trial-sticky">
+                <div class="section-label">Core Features</div>
+                <h2 class="trial-headline">
+                    Trial by<br>
+                    <span class="text-red">Fire.</span>
+                </h2>
+                <p style="font-size:.88rem;color:var(--muted);line-height:1.7;margin-bottom:32px;">
+                    Three mechanisms designed to burn bad habits before they cost you real money.
+                    This isn't a course. It's a crucible.
+                </p>
+                <div style="display:flex;flex-direction:column;gap:10px;" id="trial-progress">
+                    <div id="tp-1"
+                        style="display:flex;align-items:center;gap:10px;font-size:.8rem;color:var(--muted);transition:color .3s;">
+                        <span
+                            style="width:6px;height:6px;border-radius:50%;background:var(--border);transition:background .3s;"
+                            class="tp-dot"></span>
+                        Time-Lapse Mode
+                    </div>
+                    <div id="tp-2"
+                        style="display:flex;align-items:center;gap:10px;font-size:.8rem;color:var(--muted);transition:color .3s;">
+                        <span
+                            style="width:6px;height:6px;border-radius:50%;background:var(--border);transition:background .3s;"
+                            class="tp-dot"></span>
+                        AI Coach
+                    </div>
+                    <div id="tp-3"
+                        style="display:flex;align-items:center;gap:10px;font-size:.8rem;color:var(--muted);transition:color .3s;">
+                        <span
+                            style="width:6px;height:6px;border-radius:50%;background:var(--border);transition:background .3s;"
+                            class="tp-dot"></span>
+                        Forced Discipline
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature cards -->
+            <div class="trial-cards" id="trial-cards">
+
+                <!-- Card 1 -->
+                <div class="feature-card" id="fc-1">
+                    <div class="feature-num">01 / 03</div>
+                    <div class="feature-icon" style="background:rgba(14,203,129,.1);">⚡</div>
+                    <h3 class="feature-title">100× Speed Time-Lapse</h3>
+                    <p class="feature-desc">
+                        Survive a full year of market crashes, bull runs, and black swan events
+                        compressed into 2 minutes. Develop pattern recognition at warp speed.
+                    </p>
+                    <div class="feature-tag"
+                        style="color:var(--up);border-color:rgba(14,203,129,.3);background:rgba(14,203,129,.06);">
+                        <span>●</span> Live market simulation
+                    </div>
+                    <!-- Mini animated bar -->
+                    <div
+                        style="margin-top:24px;padding:16px;background:var(--bg);border-radius:12px;border:1px solid var(--border);">
+                        <div
+                            style="display:flex;justify-content:space-between;font-size:.68rem;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:8px;">
+                            <span>Simulation speed</span><span style="color:var(--up);">100×</span>
+                        </div>
+                        <div style="background:var(--s2);border-radius:99px;height:4px;">
+                            <div
+                                style="width:92%;height:100%;background:linear-gradient(90deg,var(--up),#00ff88);border-radius:99px;box-shadow:0 0 8px var(--up-glow);">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="feature-card" id="fc-2">
+                    <div class="feature-num">02 / 03</div>
+                    <div class="feature-icon" style="background:rgba(246,70,93,.1);">🤖</div>
+                    <h3 class="feature-title">Active AI Coach</h3>
+                    <p class="feature-desc">
+                        Our AI watches every trade in real-time. The moment it detects revenge trading,
+                        panic selling, or FOMO buying — it intercepts and explains why. No more learning
+                        from blown accounts.
+                    </p>
+                    <div class="feature-tag"
+                        style="color:var(--down);border-color:rgba(246,70,93,.3);background:rgba(246,70,93,.06);">
+                        <span>●</span> 3 interceptions saved you ₹8,200
+                    </div>
+                    <!-- AI intercept widget -->
+                    <div
+                        style="margin-top:24px;padding:14px;background:rgba(246,70,93,.06);border-radius:12px;border:1px solid rgba(246,70,93,.2);">
+                        <div
+                            style="font-size:.68rem;color:var(--down);font-family:'DM Mono',monospace;margin-bottom:4px;">
+                            ⚠ AI INTERCEPTION</div>
+                        <div style="font-size:.8rem;line-height:1.5;">Detected revenge trade pattern. Blocking order for
+                            60s. Breathe.</div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="feature-card" id="fc-3">
+                    <div class="feature-num">03 / 03</div>
+                    <div class="feature-icon" style="background:rgba(240,185,11,.1);">🔒</div>
+                    <h3 class="feature-title">Forced Survival Skills</h3>
+                    <p class="feature-desc">
+                        No stop-loss? No trade. Period. Every order must have a defined risk before
+                        execution. We wire the correct habits into muscle memory before you touch
+                        real capital.
+                    </p>
+                    <div class="feature-tag"
+                        style="color:var(--gold);border-color:rgba(240,185,11,.3);background:rgba(240,185,11,.06);">
+                        <span>●</span> Discipline over gambling
+                    </div>
+                    <!-- Rules list -->
+                    <div style="margin-top:24px;display:flex;flex-direction:column;gap:8px;">
+                        <div style="display:flex;align-items:center;gap:8px;font-size:.8rem;">
+                            <span style="color:var(--up);">✓</span> Stop-loss required on every trade
+                        </div>
+                        <div style="display:flex;align-items:center;gap:8px;font-size:.8rem;">
+                            <span style="color:var(--up);">✓</span> Max 2% risk per position enforced
+                        </div>
+                        <div style="display:flex;align-items:center;gap:8px;font-size:.8rem;">
+                            <span style="color:var(--up);">✓</span> Trade journal auto-generated
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════
+     DISCIPLINE SCORE SECTION
+══════════════════════════════════════════════ -->
+    <section id="discipline"
+        style="background:var(--s1);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+        <div class="discipline-inner">
+
+            <!-- Left: text -->
+            <div id="disc-text">
+                <div class="section-label">The End Game</div>
+                <h2
+                    style="font-size:clamp(2rem,4vw,3rem);font-weight:800;letter-spacing:-.02em;line-height:1.1;margin-bottom:20px;">
+                    Prove your discipline.<br>
+                    <span class="text-gradient">Unlock real markets.</span>
+                </h2>
+                <p style="font-size:.88rem;color:var(--muted);line-height:1.7;margin-bottom:32px;">
+                    Your Discipline Score is a composite of 6 behavioral metrics tracked across every simulation.
+                    Hit 90+ and you unlock premium APIs to real brokerages — no courses, no certifications.
+                    Just proven behavior.
+                </p>
+
+                <!-- Metric rows -->
+                <div id="metrics-list">
+                    <div class="metric-row" id="m1">
+                        <span class="metric-name">Stop-Loss Compliance</span>
+                        <span class="metric-val" style="color:var(--up);">98%</span>
+                    </div>
+                    <div class="metric-row" id="m2">
+                        <span class="metric-name">Risk per Trade</span>
+                        <span class="metric-val" style="color:var(--up);">1.8% avg</span>
+                    </div>
+                    <div class="metric-row" id="m3">
+                        <span class="metric-name">Revenge Trade Attempts</span>
+                        <span class="metric-val" style="color:var(--down);">3 blocked</span>
+                    </div>
+                    <div class="metric-row" id="m4">
+                        <span class="metric-name">Win Rate (Last 30)</span>
+                        <span class="metric-val">54%</span>
+                    </div>
+                    <div class="metric-row" id="m5">
+                        <span class="metric-name">Profit Factor</span>
+                        <span class="metric-val" style="color:var(--up);">2.1×</span>
+                    </div>
+                </div>
+
+                <div
+                    style="margin-top:28px;padding:16px 20px;background:rgba(14,203,129,.06);border:1px solid rgba(14,203,129,.2);border-radius:12px;font-size:.82rem;">
+                    🔓 At <strong style="color:var(--up);">Score 90+</strong> — Unlock Zerodha, Groww &amp; Angel One
+                    API access
+                </div>
+            </div>
+
+            <!-- Right: score ring -->
+            <div id="disc-ring" style="text-align:center;">
+                <div class="discipline-score-ring">
+                    <svg width="220" height="220" viewBox="0 0 220 220">
+                        <circle class="ring-track" cx="110" cy="110" r="96" />
+                        <circle class="ring-fill" id="ring-fill" cx="110" cy="110" r="96" />
+                    </svg>
+                    <div class="ring-center">
+                        <div class="ring-pct" id="ring-pct">0</div>
+                        <div class="ring-sub">DISCIPLINE SCORE</div>
+                        <div style="margin-top:8px;font-size:.62rem;font-family:'DM Mono',monospace;color:var(--gold);">
+                            ELITE TRADER</div>
+                    </div>
+                </div>
+
+                <!-- Progress bars -->
+                <div
+                    style="margin-top:32px;max-width:280px;margin-left:auto;margin-right:auto;display:flex;flex-direction:column;gap:12px;">
+                    <div>
+                        <div
+                            style="display:flex;justify-content:space-between;font-size:.7rem;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:5px;">
+                            <span>Unlock Progress</span><span id="progress-pct" style="color:var(--up);">0%</span>
+                        </div>
+                        <div class="progress-bar-wrap">
+                            <div class="progress-bar-fill" id="progress-bar"></div>
+                        </div>
+                    </div>
+                    <div style="font-size:.72rem;color:var(--muted);font-family:'DM Mono',monospace;text-align:center;">
+                        8 more trades to hit 100 🎯
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════
+     FINAL CTA BANNER
+══════════════════════════════════════════════ -->
+    <section id="cta-banner">
+        <div class="orb"
+            style="width:700px;height:700px;background:rgba(14,203,129,.07);top:50%;left:50%;transform:translate(-50%,-50%);">
+        </div>
+        <div class="z1">
+            <h2 class="cta-headline" id="cta-h">
+                Your next trade<br>
+                <span class="text-gradient">could define you.</span>
+            </h2>
+            <p class="cta-sub" id="cta-p">
+                Join 2,400+ traders who stopped gambling and started managing risk.
+            </p>
+            <div style="opacity:0;" id="cta-btn-wrap">
+                <button class="btn-cta" id="cta-main" onclick="window.location.href='index.html'"
+                    style="font-size:1.05rem;padding:17px 48px;">
+                    Enter the Arena →
+                </button>
+            </div>
+            <p style="margin-top:20px;font-size:.72rem;color:var(--muted);font-family:'DM Mono',monospace;opacity:0;"
+                id="cta-fine">
+                Free · No credit card · Real market data
+            </p>
+        </div>
+    </section>
+
+
+    <!-- ══════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════ -->
+    <footer>
+        <div style="display:flex;align-items:center;gap:10px;">
+            <div class="logo-mark" style="width:28px;height:28px;font-size:.72rem;">SQ</div>
+            <span style="font-size:.82rem;font-weight:700;">StockQuest</span>
+            <span style="font-size:.72rem;color:var(--muted);font-family:'DM Mono',monospace;">© 2025</span>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:28px;flex-wrap:wrap;">
+            <a href="index.html" class="footer-link">Home</a>
+            <a href="index.html" class="footer-link">Trading Terminal</a>
+            <a href="today.html" class="footer-link">Market Overview</a>
+            <a href="#discipline" class="footer-link">AI Risk Analytics</a>
+        </div>
+
+        <div style="font-size:.72rem;color:var(--muted);font-family:'DM Mono',monospace;">
+            Virtual trading only · Not financial advice
+        </div>
+    </footer>
+
+
+    <!-- ══════════════════════════════════════════════
+     GSAP ANIMATIONS
+══════════════════════════════════════════════ -->
+    <script>
+        'use strict';
+
+        // ─── Register GSAP plugins ────────────────────────────────────
+        gsap.registerPlugin(ScrollTrigger, TextPlugin);
+
+        // ─── Custom cursor ────────────────────────────────────────────
+        const cursor = document.getElementById('cursor');
+        const cursorRing = document.getElementById('cursor-ring');
+        let mouseX = 0, mouseY = 0;
+        let ringX = 0, ringY = 0;
+
+        document.addEventListener('mousemove', e => {
+            mouseX = e.clientX; mouseY = e.clientY;
+            gsap.to(cursor, { x: mouseX, y: mouseY, duration: 0.05, ease: 'none' });
+        });
+
+        // Cursor ring follows with lag
+        function animateRing() {
+            ringX += (mouseX - ringX) * 0.12;
+            ringY += (mouseY - ringY) * 0.12;
+            gsap.set(cursorRing, { x: ringX, y: ringY });
+            requestAnimationFrame(animateRing);
+        }
+        animateRing();
+
+        // ─── Navbar scroll effect ─────────────────────────────────────
+        const navbar = document.getElementById('navbar');
+        ScrollTrigger.create({
+            start: 'top -80',
+            onUpdate: self => navbar.classList.toggle('scrolled', self.scroll() > 80),
+        });
+
+        // ─── Hero badge entrance ──────────────────────────────────────
+        gsap.to('#hero-badge', {
+            opacity: 1, y: 0,
+            duration: .8, delay: .2, ease: 'power3.out',
+            from: { y: 20 },
+        });
+        gsap.from('#hero-badge', { y: 20 });
+
+        // ─── Hero headline — character-by-character reveal ───────────
+        function splitAndAnimate(selector, delay = 0.5) {
+            const el = document.querySelector(selector);
+            if (!el) return;
+
+            // Wrap each character in a span
+            el.querySelectorAll('span').forEach(span => {
+                const text = span.textContent;
+                let html = '';
+                for (const char of text) {
+                    html += char === ' '
+                        ? ' '
+                        : `<span class="char" style="display:inline-block;">${char}</span>`;
+                }
+                span.innerHTML = html;
+            });
+
+            const chars = el.querySelectorAll('.char');
+            gsap.to(chars, {
+                opacity: 1,
+                y: 0,
+                duration: .05,
+                stagger: 0.028,
+                delay,
+                ease: 'power2.out',
+            });
+        }
+
+        splitAndAnimate('#hero-h1', 0.6);
+
+        // ─── Hero sub, CTAs, trust ────────────────────────────────────
+        const heroTl = gsap.timeline({ delay: 1.2 });
+        heroTl
+            .to('#hero-sub', { opacity: 1, y: 0, duration: .7, ease: 'power3.out' }, 0)
+            .to('#hero-ctas', { opacity: 1, y: 0, duration: .6, ease: 'power3.out' }, .2)
+            .to('#hero-trust', { opacity: 1, y: 0, duration: .5, ease: 'power3.out' }, .4);
+
+        gsap.set(['#hero-sub', '#hero-ctas', '#hero-trust'], { y: 24 });
+
+        // ─── Hero visual — 3D float entrance ─────────────────────────
+        gsap.fromTo('#hero-visual', {
+            opacity: 0, y: 60, rotateX: 12, rotateY: -4,
+        }, {
+            opacity: 1, y: 0, rotateX: 0, rotateY: 0,
+            duration: 1.4, delay: 1.0, ease: 'power3.out',
+        });
+
+        // ─── SVG chart line draw ──────────────────────────────────────
+        gsap.to('#chart-line', {
+            strokeDashoffset: 0,
+            duration: 2.2, delay: 1.6, ease: 'power2.inOut',
+        });
+
+        // ─── Floating animation for hero visual (infinite) ───────────
+        gsap.to('#hero-visual', {
+            y: -16,
+            duration: 3.5,
+            repeat: -1,
+            yoyo: true,
+            ease: 'sine.inOut',
+            delay: 2.4,
+        });
+
+        // ─── Stat pills float with offset ────────────────────────────
+        gsap.to('#pill-1', { y: -10, duration: 3.2, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: 2.6 });
+        gsap.to('#pill-2', { y: 12, duration: 2.8, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: 2.9 });
+        gsap.to('#pill-3', { y: -8, duration: 3.8, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: 3.1 });
+
+        // ─── Magnetic CTA button ──────────────────────────────────────
+        function makeMagnetic(btnId) {
+            const btn = document.getElementById(btnId);
+            if (!btn) return;
+
+            btn.addEventListener('mousemove', e => {
+                const rect = btn.getBoundingClientRect();
+                const cx = rect.left + rect.width / 2;
+                const cy = rect.top + rect.height / 2;
+                const dx = e.clientX - cx;
+                const dy = e.clientY - cy;
+                const strength = 0.35;
+                gsap.to(btn, { x: dx * strength, y: dy * strength, duration: .3, ease: 'power2.out' });
+            });
+            btn.addEventListener('mouseleave', () => {
+                gsap.to(btn, { x: 0, y: 0, duration: .5, ease: 'elastic.out(1,.4)' });
+            });
+
+            // Ripple on click
+            btn.addEventListener('click', e => {
+                const rect = btn.getBoundingClientRect();
+                const ripple = document.createElement('span');
+                ripple.className = 'btn-ripple';
+                const size = Math.max(rect.width, rect.height);
+                ripple.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - rect.left - size / 2}px;top:${e.clientY - rect.top - size / 2}px;`;
+                btn.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 700);
+            });
+        }
+
+        makeMagnetic('main-cta');
+        makeMagnetic('nav-cta');
+        makeMagnetic('cta-main');
+
+        // ─── Logos row scroll reveal ──────────────────────────────────
+        gsap.to('#logos-row .logo-pill', {
+            opacity: 1, y: 0,
+            duration: .5, stagger: .08, ease: 'power2.out',
+            scrollTrigger: { trigger: '#proof', start: 'top 80%' },
+        });
+        gsap.set('#logos-row .logo-pill', { y: 16 });
+
+        // ─── Stats section — count up ────────────────────────────────
+        const stats = [
+            { id: 'stat-1', target: 2400, suffix: '+', prefix: '' },
+            { id: 'stat-2', target: 100, suffix: '×', prefix: '' },
+            { id: 'stat-3', target: 48200, suffix: '+', prefix: '' },
+            { id: 'stat-4', target: 50, suffix: '+', prefix: '' },
+        ];
+
+        gsap.to('#stats-grid .stat-block', {
+            opacity: 1, y: 0,
+            duration: .6, stagger: .12, ease: 'power3.out',
+            scrollTrigger: { trigger: '#stats', start: 'top 75%' },
+            onStart() {
+                stats.forEach(s => {
+                    const el = document.getElementById(s.id);
+                    if (!el) return;
+                    const obj = { val: 0 };
+                    gsap.to(obj, {
+                        val: s.target, duration: 2, ease: 'power2.out',
+                        onUpdate() {
+                            el.textContent = s.prefix + Math.round(obj.val).toLocaleString('en-IN') + s.suffix;
+                        },
+                    });
+                });
+            },
+        });
+        gsap.set('#stats-grid .stat-block', { y: 30 });
+
+        // ─── Trial by fire — sticky pin + card reveals ────────────────
+        const trialSection = document.getElementById('trial');
+        const trialSticky = document.getElementById('trial-sticky');
+
+
+        // Animate each feature card on scroll
+        // Animate each feature card on scroll
+        const featureCards = ['#fc-1', '#fc-2', '#fc-3'];
+        featureCards.forEach((sel, i) => {
+            gsap.from(sel, {
+                opacity: 0, y: 60,
+                duration: .7, ease: 'power3.out',
+                scrollTrigger: { trigger: sel, start: 'top 80%', toggleActions: 'play none none reverse' },
+            });
+
+            // Update sidebar progress indicator
+            ScrollTrigger.create({
+                trigger: sel,
+                start: 'top 50%',
+                end: 'bottom 50%',
+                onEnter() { activateTrialStep(i + 1); },
+                onLeave() { deactivateTrialStep(i + 1); },
+                onEnterBack() { activateTrialStep(i + 1); },
+                onLeaveBack() { deactivateTrialStep(i + 1); },
+            });
+        });
+
+        function activateTrialStep(n) {
+            const el = document.getElementById(`tp-${n}`);
+            const dot = el?.querySelector('.tp-dot');
+            if (!el || !dot) return;
+            el.style.color = 'var(--text)';
+            dot.style.background = 'var(--up)';
+            dot.style.boxShadow = '0 0 8px var(--up)';
+        }
+        function deactivateTrialStep(n) {
+            const el = document.getElementById(`tp-${n}`);
+            const dot = el?.querySelector('.tp-dot');
+            if (!el || !dot) return;
+            el.style.color = 'var(--muted)';
+            dot.style.background = 'var(--border)';
+            dot.style.boxShadow = 'none';
+        }
+
+        // ─── Discipline section animations ───────────────────────────
+        // Text columns slide in
+        gsap.fromTo('#disc-text', { opacity: 0, x: -50 }, {
+            opacity: 1, x: 0, duration: 1, ease: 'power3.out',
+            scrollTrigger: { trigger: '#discipline', start: 'top 70%' },
+        });
+
+        gsap.fromTo('#disc-ring', { opacity: 0, x: 50 }, {
+            opacity: 1, x: 0, duration: 1, delay: .15, ease: 'power3.out',
+            scrollTrigger: { trigger: '#discipline', start: 'top 70%' },
+        });
+
+        // Metric rows stagger
+        gsap.to(['#m1', '#m2', '#m3', '#m4', '#m5'], {
+            opacity: 1, x: 0,
+            duration: .5, stagger: .1, ease: 'power2.out',
+            scrollTrigger: { trigger: '#metrics-list', start: 'top 80%' },
+        });
+        gsap.set(['#m1', '#m2', '#m3', '#m4', '#m5'], { x: -20 });
+
+        // Discipline score ring + progress bar animate on scroll
+        ScrollTrigger.create({
+            trigger: '#disc-ring',
+            start: 'top 75%',
+            once: true,
+            onEnter() {
+                const TARGET_SCORE = 92;
+                const CIRCUMFERENCE = 2 * Math.PI * 96; // 603.19
+                const fillEl = document.getElementById('ring-fill');
+                const pctEl = document.getElementById('ring-pct');
+                const progressBar = document.getElementById('progress-bar');
+                const progressPct = document.getElementById('progress-pct');
+
+                const obj = { score: 0, pct: 0 };
+                gsap.to(obj, {
+                    score: TARGET_SCORE,
+                    pct: TARGET_SCORE,
+                    duration: 2.2,
+                    ease: 'power3.out',
+                    onUpdate() {
+                        const offset = CIRCUMFERENCE - (obj.score / 100) * CIRCUMFERENCE;
+                        fillEl.style.strokeDashoffset = offset;
+                        pctEl.textContent = Math.round(obj.score);
+
+                        const barPct = Math.round(obj.pct);
+                        progressBar.style.width = barPct + '%';
+                        progressPct.textContent = barPct + '%';
+                    },
+                });
+            },
+        });
+
+        // ─── Final CTA section ────────────────────────────────────────
+        const ctaTl = gsap.timeline({
+            scrollTrigger: { trigger: '#cta-banner', start: 'top 70%' },
+        });
+        gsap.set(['#cta-h', '#cta-p', '#cta-btn-wrap', '#cta-fine'], { y: 30 });
+
+        ctaTl
+            .to('#cta-h', { opacity: 1, y: 0, duration: .8, ease: 'power3.out' })
+            .to('#cta-p', { opacity: 1, y: 0, duration: .6, ease: 'power3.out' }, .2)
+            .to('#cta-btn-wrap', { opacity: 1, y: 0, duration: .6, ease: 'power3.out' }, .35)
+            .to('#cta-fine', { opacity: 1, y: 0, duration: .5, ease: 'power3.out' }, .5);
+
+        // ─── Subtle parallax on hero visual ──────────────────────────
+        gsap.to('#hero-visual', {
+            yPercent: -12,
+            ease: 'none',
+            scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true },
+        });
+
+        // ─── Refresh ScrollTrigger on load ───────────────────────────
+        window.addEventListener('load', () => ScrollTrigger.refresh());
+    </script>
+
+</body>
+
+</html>
