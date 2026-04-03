@@ -565,7 +565,9 @@ function updateClock() {
  */
 async function fetchAndRender() {
     const lastUpdEl = $('lastUpdated');
+    const apiStatusEl = $('apiStatusText');
     if (lastUpdEl) lastUpdEl.textContent = 'Updating…';
+    if (apiStatusEl) apiStatusEl.textContent = 'Loading real-time data...';
 
     try {
         const res = await fetch('/api/market-overview');
@@ -574,6 +576,7 @@ async function fetchAndRender() {
         if (!data.success) {
             console.error('[fetchAndRender] API error:', data.message);
             if (lastUpdEl) lastUpdEl.textContent = 'Error — retrying in 60s';
+            if (apiStatusEl) apiStatusEl.textContent = 'API Error';
             showError(data.message);
             return;
         }
@@ -601,12 +604,14 @@ async function fetchAndRender() {
             : new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 
         if (lastUpdEl) lastUpdEl.textContent = `${fetchTime} (15-min delayed)`;
+        if (apiStatusEl) apiStatusEl.textContent = 'Live Data Loaded';
 
         console.log(`%c[StockQuest] Market data updated at ${fetchTime}`, 'color:#0ecb81;');
 
     } catch (err) {
         console.error('[fetchAndRender] Network error:', err.message);
         if (lastUpdEl) lastUpdEl.textContent = 'Network error — retrying in 60s';
+        if (apiStatusEl) apiStatusEl.textContent = 'Connection Failed';
         showError('Could not connect to backend. Make sure server.js is running.');
     }
 }
@@ -643,11 +648,14 @@ function boot() {
     setInterval(fetchNews, 10 * 60 * 1000); // Auto-refresh every 10 min
     renderFO();
     updateClock();
-    document.getElementById("apiStatusText").innerText = "Loading real-time data...";
+    const apiStatusEl = $('apiStatusText');
+    if (apiStatusEl) apiStatusEl.textContent = 'Loading real-time data...';
 
     // Show skeletons while data loads
     showLoadingState();
-    gsap.from(".card", { opacity: 0, y: 20, duration: 0.6, stagger: 0.1 });
+    if (typeof gsap !== 'undefined') {
+        gsap.from('.card', { opacity: 0, y: 20, duration: 0.6, stagger: 0.1 });
+    }
 
     // Fetch real data
     fetchAndRender();
@@ -683,41 +691,3 @@ if (searchBox) {
     });
   });
 }
-
-async function loadMarketData() {
-  try {
-    const res = await fetch('/api/market-overview');
-    const data = await res.json();
-
-    if (!data.success) {
-      document.getElementById("apiStatusText").innerText = "API Error ❌";
-      return;
-    }
-
-    document.getElementById("apiStatusText").innerText = "Live Data Loaded ✅";
-
-    // CALL YOUR FUNCTIONS
-    renderIndices(data.indices);
-    renderGainers(data.gainers);
-    renderLosers(data.losers);
-    renderActive(data.active);
-
-  } catch (err) {
-    console.error(err);
-    document.getElementById("apiStatusText").innerText = "Connection Failed ❌";
-  }
-}
-
-// AUTO RUN
-// all your functions...
-
-async function loadMarketData() {
-   // API call
-}
-
-// LAST LINE
-document.addEventListener("DOMContentLoaded", () => {
-  loadMarketData();
-});
-// OPTIONAL: refresh every 60 sec
-setInterval(loadMarketData, 60000);
