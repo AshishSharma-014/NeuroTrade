@@ -5,58 +5,165 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>NeuroTrade — Virtual CA</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap"
+    rel="stylesheet" />
   <link rel="stylesheet" href="css/pages/CA.css">
   <link rel="stylesheet" href="/css/pages/index.css">
 </head>
 
-<body>
+<body class="grid-bg">
 
   <!-- NAVBAR -->
   <div id="navbar"></div>
 
   <!-- HERO -->
-  <section class="hero">
-    <h1>💼 Your Virtual CA</h1>
-    <p>Manage taxes, savings, and financial planning — all in one place</p>
+  <section class="hero z1">
+    <div class="orb ca-orb ca-orb-left"></div>
+    <div class="orb ca-orb ca-orb-right"></div>
+
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <div class="section-label">Virtual CA Desk</div>
+        <h1>Plan smarter. Ask better. Act with clarity.</h1>
+        <p>Manage taxes, savings, and financial planning with an AI-powered assistant and instant planners built for everyday decisions.</p>
+
+        <div class="hero-actions">
+          <button class="btn-cta" type="button" data-scroll-target="#caAssistant">Ask Virtual CA</button>
+          <button class="btn-secondary" type="button" data-scroll-target="#plannerGrid">Open Planners</button>
+        </div>
+
+        <div class="hero-chips">
+          <span>Tax estimate</span>
+          <span>Savings breakdown</span>
+          <span>Goal roadmap</span>
+          <span>AI guidance</span>
+        </div>
+      </div>
+
+      <div class="hero-panel">
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span>Monthly Savings</span>
+            <strong id="heroMonthlySavings">₹0</strong>
+            <small class="num">Track what remains after expenses</small>
+          </div>
+          <div class="hero-stat">
+            <span>Goal SIP</span>
+            <strong id="heroGoalMonthly">₹0</strong>
+            <small class="num">See required monthly investing</small>
+          </div>
+          <div class="hero-stat">
+            <span>AI Status</span>
+            <strong id="aiStatusBadge">Offline fallback</strong>
+            <small class="num">Gemini replies when key is configured</small>
+          </div>
+        </div>
+
+        <div class="pulse-card">
+          <div class="pulse-row">
+            <span>Prepared for</span>
+            <span class="num">Salary · SIP · Tax</span>
+          </div>
+          <div class="pulse-row">
+            <span>Response style</span>
+            <span class="num">Short, practical, actionable</span>
+          </div>
+          <div class="pulse-row">
+            <span>Assistant mode</span>
+            <span class="num" id="assistantMode">Financial guidance</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <!-- TAX CALCULATOR -->
-  <section class="card">
-    <h2>💰 Tax Calculator</h2>
+  <section class="assistant-shell z1" id="caAssistant">
+    <div class="assistant-card">
+      <div class="assistant-header">
+        <div>
+          <div class="section-label">AI Assistant</div>
+          <h2>Ask your Virtual CA</h2>
+        </div>
+        <div class="assistant-indicator">
+          <span class="ldot"></span>
+          <span id="assistantLiveLabel">Ready</span>
+        </div>
+      </div>
 
-    <input type="number" id="income" placeholder="Enter your yearly income">
+      <div class="assistant-prompts" id="quickPrompts">
+        <button type="button" class="prompt-chip" data-prompt="How much should I save every month if my salary is 65000 and expenses are 42000?">Monthly savings help</button>
+        <button type="button" class="prompt-chip" data-prompt="Explain how to split money between emergency fund, SIP, and debt repayment.">Money split</button>
+        <button type="button" class="prompt-chip" data-prompt="What should I do before filing taxes as a salaried employee in India?">Tax checklist</button>
+      </div>
 
-    <button onclick="calculateTax()">Calculate Tax</button>
+      <div class="chat-window" id="chatWindow">
+        <div class="message bot">
+          <div class="message-role">Virtual CA</div>
+          <p>Ask about taxes, savings targets, SIP planning, budgeting, or goal timelines. I’ll keep answers practical and concise.</p>
+        </div>
+      </div>
 
-    <p id="taxResult"></p>
+      <div class="chat-form">
+        <textarea id="caQuestion" rows="3" placeholder="Ask anything about tax planning, savings, investments, budgeting, or financial goals..."></textarea>
+        <div class="chat-actions">
+          <div class="helper-text">Powered by Gemini when `GEMINI_API_KEY` is available.</div>
+          <button class="btn-cta" type="button" id="askCAButton">Ask Virtual CA</button>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <!-- SAVINGS PLANNER -->
-  <section class="card">
-    <h2>📊 Savings Planner</h2>
+  <section class="planner-grid z1" id="plannerGrid">
+    <!-- TAX CALCULATOR -->
+    <section class="card planner-card">
+      <div class="card-top">
+        <h2>💰 Tax Calculator</h2>
+        <span class="card-pill">Estimate</span>
+      </div>
 
-    <input type="number" id="salary" placeholder="Monthly Salary">
-    <input type="number" id="expenses" placeholder="Monthly Expenses">
+      <input type="number" id="income" placeholder="Enter your yearly income">
 
-    <button onclick="calculateSavings()">Analyze</button>
+      <button type="button" onclick="calculateTax()">Calculate Tax</button>
 
-    <p id="savingsResult"></p>
-  </section>
+      <p id="taxResult" class="result-box">Enter your annual income to estimate tax liability.</p>
+    </section>
 
-  <!-- GOAL PLANNER -->
-  <section class="card">
-    <h2>🎯 Goal Planner</h2>
+    <!-- SAVINGS PLANNER -->
+    <section class="card planner-card">
+      <div class="card-top">
+        <h2>📊 Savings Planner</h2>
+        <span class="card-pill">Monthly</span>
+      </div>
 
-    <input type="number" id="goalAmount" placeholder="Target Amount (₹)">
-    <input type="number" id="years" placeholder="Years">
+      <input type="number" id="salary" placeholder="Monthly Salary">
+      <input type="number" id="expenses" placeholder="Monthly Expenses">
 
-    <button onclick="calculateGoal()">Calculate</button>
+      <button type="button" onclick="calculateSavings()">Analyze</button>
 
-    <p id="goalResult"></p>
+      <p id="savingsResult" class="result-box">See how much you save, your savings rate, and whether your spending needs attention.</p>
+    </section>
+
+    <!-- GOAL PLANNER -->
+    <section class="card planner-card">
+      <div class="card-top">
+        <h2>🎯 Goal Planner</h2>
+        <span class="card-pill">Target</span>
+      </div>
+
+      <input type="number" id="goalAmount" placeholder="Target Amount (₹)">
+      <input type="number" id="years" placeholder="Years">
+
+      <button type="button" onclick="calculateGoal()">Calculate</button>
+
+      <p id="goalResult" class="result-box">Understand the monthly investment needed to reach your target on time.</p>
+    </section>
   </section>
 
   <!-- TIPS -->
-  <section class="tips">
+  <section class="tips z1">
     <h2>📘 Smart Financial Tips</h2>
 
     <div class="tip-card">Always invest at least 20% of your income</div>

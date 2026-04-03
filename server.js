@@ -25,6 +25,7 @@
 
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const cors = require('cors');
 const compression = require('compression');
 
@@ -32,6 +33,35 @@ const app = express(); // ✅ ONLY ONCE
 const PORT = process.env.PORT || 3000;
 
 let yahooFinance; // loaded later
+
+function loadLocalEnv() {
+  const envPath = path.join(__dirname, '.env');
+  if (!fs.existsSync(envPath)) return;
+
+  const lines = fs.readFileSync(envPath, 'utf8').split(/\r?\n/);
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
+    if (!line || line.startsWith('#')) continue;
+
+    const eq = line.indexOf('=');
+    if (eq === -1) continue;
+
+    const key = line.slice(0, eq).trim();
+    let value = line.slice(eq + 1).trim();
+    if (!key || process.env[key]) continue;
+
+    if (
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"))
+    ) {
+      value = value.slice(1, -1);
+    }
+
+    process.env[key] = value;
+  }
+}
+
+loadLocalEnv();
 
 // ─── Middlewares ─────────────────────────
 app.use(cors());
@@ -680,6 +710,109 @@ app.get('/api/news', async (req, res) => {
     });
   }
 });
+
+function buildLocalAdvice(message) {
+  const q = String(message || '').toLowerCase();
+
+  if (q.includes('tax')) {
+    return 'Keep salary slips, Form 16, deduction proofs, and investment statements ready. Verify your taxable income, compare deduction options, and file only after reconciling AIS/TIS details.';
+  }
+  if (q.includes('save') || q.includes('saving') || q.includes('budget')) {
+    return 'Start with a simple split: essentials first, then emergency fund, then SIPs. If savings are below 15% of income, reduce recurring non-essential expenses before increasing investing risk.';
+  }
+  if (q.includes('goal') || q.includes('sip') || q.includes('invest')) {
+    return 'Define the target amount, time horizon, and monthly contribution needed. Match short-term goals with safer assets and long-term goals with diversified SIPs.';
+  }
+  if (q.includes('debt') || q.includes('loan')) {
+    return 'Pay off high-interest debt before increasing aggressive investments. Keep EMIs manageable and avoid using credit for speculative trading.';
+  }
+
+  return 'Focus on three things first: emergency fund, controlled spending, and disciplined investing. Ask me with your income, expenses, and target if you want a more specific plan.';
+}
+
+app.post('/api/ai-advice', async (req, res) => {
+  const message = String(req.body?.message || '').trim();
+
+  if (!message) {
+    return res.status(400).json({ success: false, message: 'Question is required.' });
+  }
+
+  const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+  const model = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
+
+  if (!apiKey) {
+    return res.json({
+      success: true,
+      provider: 'fallback',
+      reply: buildLocalAdvice(message),
+    });
+  }
+
+  try {
+    const geminiRes = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-goog-api-key': apiKey,
+        },
+        body: JSON.stringify({
+          systemInstruction: {
+            parts: [
+              {
+                text: 'You are a practical virtual Chartered Accountant and financial planner for Indian users. Give concise, accurate, action-oriented answers. Avoid hype, guarantee language, and legal certainty. When tax/legal details may depend on current law, say it is general guidance and suggest verification with current filings or a licensed CA.',
+              },
+            ],
+          },
+          contents: [
+            {
+              role: 'user',
+              parts: [{ text: message }],
+            },
+          ],
+          generationConfig: {
+            temperature: 0.4,
+            maxOutputTokens: 500,
+          },
+        }),
+      }
+    );
+
+    const data = await geminiRes.json();
+    const reply =
+      data?.candidates?.[0]?.content?.parts
+        ?.map((part) => part.text || '')
+        .join('\n')
+        .trim() || '';
+
+    if (!geminiRes.ok || !reply) {
+      throw new Error(data?.error?.message || 'Gemini returned an empty response.');
+    }
+
+    res.json({
+      success: true,
+      provider: 'gemini',
+      reply,
+    });
+  } catch (err) {
+    console.error('[/api/ai-advice] Error:', err.message);
+    res.json({
+      success: true,
+      provider: 'fallback',
+      reply: buildLocalAdvice(message),
+      fallbackReason: err.message,
+    });
+  }
+});
+
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'OK',
+    time: new Date(),
+    server: 'NeuroTrade Backend',
+  });
+});
 // Catch-all SPA
 // YEH NAYI LINE ADD KARNI HAI
 // Home route
@@ -710,28 +843,4 @@ app.listen(PORT, async () => {
     console.error('  ⚠️  yahoo-finance2 failed to load:', err.message);
     console.error('  ⚠️  Run: npm install yahoo-finance2\n');
   }
-});
-app.post('/api/ai-advice', (req, res) => {
-  const { message } = req.body;
-
-  let reply = "I am your AI mentor 🤖";
-
-  if (message.toLowerCase().includes("loss")) {
-    reply = "Stop trading emotionally. Always use stop-loss and risk management.";
-  } else if (message.toLowerCase().includes("buy")) {
-    reply = "Don't blindly buy. Check trend, volume, and support levels.";
-  } else if (message.toLowerCase().includes("profit")) {
-    reply = "Secure profits. Don't get greedy. Follow discipline.";
-  } else {
-    reply = "Focus on discipline, risk management, and consistency.";
-  }
-
-  res.json({ success: true, reply });
-});
-app.get('/api/health', (req, res) => {
-  res.json({
-    status: "OK",
-    time: new Date(),
-    server: "NeuroTrade Backend"
-  });
 });
