@@ -463,7 +463,7 @@ app.post('/api/sell', async (req, res) => {
 
   const h = gameState.portfolio.find(p => p.symbol === ySymbol);
   if (!h || h.qty < n) {
-    return res.status(400).json({
+    return res.status(400).json({     // haaha
       success: false,
       message: `You only hold ${h ? h.qty : 0} shares of ${toDisplaySymbol(ySymbol)}.`,
     });
